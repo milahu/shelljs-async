@@ -24398,6 +24398,7 @@ function ls(args = [], options = {}) {
         yield [1, file + "\n"];
       }
     }
+    return 0
   }
 }
 
@@ -24410,10 +24411,19 @@ function grep(args = [], options = {}) {
   }
 }
 
+function echo(args = [], options = {}) {
+  /** @return {AsyncGenerator<[number, string]>} */
+  return async function* echo_() {
+    yield [1, args.join(" ") + "\n"];
+    return 0
+  }
+}
+
 const bin = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
     __proto__: null,
     ls,
-    grep
+    grep,
+    echo
 }, Symbol.toStringTag, { value: 'Module' }));
 
 /**
@@ -24482,12 +24492,28 @@ async function stringify(it) {
   return buf
 }
 
+/**
+ * print stdout, stderr, code of iterator
+ * @param {AsyncGenerator<[number, string]>} it
+ */
+async function debug(it) {
+  let result = await it.next();
+  while (result.done == false) {
+    const [stream, chunk] = result.value;
+    console.log(`stream ${stream}: chunk: ` + JSON.stringify(chunk));
+    result = await it.next();
+  }
+  const code = result.value;
+  console.log(`code ${code}`);
+}
+
 const lib = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
     __proto__: null,
     readline,
     readlines,
     pipe,
-    stringify
+    stringify,
+    debug
 }, Symbol.toStringTag, { value: 'Module' }));
 
 globalThis.bin = bin;
