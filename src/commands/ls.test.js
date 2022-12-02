@@ -1,10 +1,9 @@
-//import ls from "../../src/commands/ls.js"
-import { ls } from "../../src/index.js"
+import { ls } from "./ls.js"
 
 (async function main() {
 
-for await (const chunk of ls()) {
-  process.stdout.write(chunk);
+for await (const chunk of ls()()) {
+  console.log("chunk: " + JSON.stringify(chunk))
 }
 
 })();
