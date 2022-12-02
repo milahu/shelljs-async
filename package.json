@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "cd demo && npx vite",
+    "pretty": "prettier -w src/**/*.js",
     "test": "bash test.sh"
   },
   "keywords": [
