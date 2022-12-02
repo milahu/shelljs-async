@@ -7,17 +7,12 @@ function* stdin() {
   yield "1"
   yield "\n"
   yield "abc2\n"
+  yield "abc3"
 }
 
 var stdin_ = stdin()
 
-for (let i = 0; i < 3; i++) {
+for (let i = 0; i < 4; i++) {
   var line = await readline(stdin_)
   console.log("line: " + JSON.stringify(line))
 }
-
-/*
-for await (const line of readline(stdin())) {
-console.log("line: " + JSON.stringify(line))
-}
-*/
