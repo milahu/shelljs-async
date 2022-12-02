@@ -1,2 +1,2 @@
-export * from "./commands/.index.js";
-export * from "./utils/.index.js";
+export * as bin from "./commands/.index.js";
+export * as lib from "./utils/.index.js";
