@@ -1,7 +1,11 @@
 import * as BrowserFS from "browserfs"
 import pify from "pify"
-import * as shell from "../src/index.js"
-globalThis.sh = shell
+
+import * as bin from "../bin.js"
+import * as lib from "../lib.js"
+
+globalThis.bin = bin
+globalThis.lib = lib
 
 // set globalThis.require
 BrowserFS.install(globalThis);
@@ -29,5 +33,8 @@ BrowserFS.configure({
   await fs.promises.writeFile('/test.txt', 'Cool, I can do this in the browser!');
   var contents = await fs.promises.readFile('/test.txt');
   console.log(contents.toString());
+
+  console.log(`await lib.stringify(bin.ls()())`)
+  console.log(await lib.stringify(bin.ls()()))
 
 });
