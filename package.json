@@ -1,0 +1,22 @@
+{
+  "name": "shelljs-web",
+  "version": "0.0.1",
+  "description": "shelljs in web browser",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "bash2js",
+    "sh2js",
+    "bash-interpreter",
+    "bash-emulator",
+    "bash-shell",
+    "shell",
+    "shelljs",
+    "shell-js"
+  ],
+  "author": "Milan Hauth",
+  "license": "MIT"
+}
