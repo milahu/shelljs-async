@@ -18,5 +18,8 @@
     "shell-js"
   ],
   "author": "Milan Hauth",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "minimist": "^1.2.7"
+  }
 }
