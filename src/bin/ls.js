@@ -23,5 +23,6 @@ export function ls(args = [], options = {}) {
         yield [1, file + "\n"]
       }
     }
+    return 0
   }
 }
