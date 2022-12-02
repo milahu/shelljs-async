@@ -1,8 +1,11 @@
-/** @param {Generator<string>} it */
+/** @param {Generator<[number, string]>} it */
 export async function stringify(it) {
   let buf = ""
-  for await (const chunk of it) {
-    buf += chunk
+  for await (const [stream, chunk] of it) {
+    // only stdout
+    if (stream == 1) {
+      buf += chunk
+    }
   }
   return buf
 }
