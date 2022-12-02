@@ -20,11 +20,11 @@
   "author": "Milan Hauth",
   "license": "MIT",
   "dependencies": {
-    "minimist": "^1.2.7",
-    "pify": "^6.1.0"
+    "minimist": "^1.2.7"
   },
   "devDependencies": {
     "@types/node": "^18.11.10",
-    "browserfs": "^1.4.3"
+    "browserfs": "^1.4.3",
+    "pify": "^6.1.0"
   }
 }
