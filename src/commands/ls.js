@@ -11,13 +11,16 @@ export function ls(args = [], options = {}) {
   if (files.length == 0) files.push(".")
   //console.dir({arg, files})
 
+  /** @return {AsyncGenerator<[number, string]>} */
   return async function* ls_() {
     for (const file of files) {
       const stats = await fs.promises.stat(file)
       if (stats.isDirectory()) {
-        for (const file2 of await fs.promises.readdir(file)) yield file2 + "\n"
+        for (const file2 of await fs.promises.readdir(file)) {
+          yield [1, file2 + "\n"]
+        }
       } else if (stats.isFile()) {
-        yield file + "\n"
+        yield [1, file + "\n"]
       }
     }
   }

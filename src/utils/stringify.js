@@ -1,6 +1,4 @@
-/**
-* @param {Generator<string>} it
-*/
+/** @param {Generator<string>} it */
 export async function stringify(it) {
   let buf = ""
   for await (const chunk of it) {
