@@ -20,7 +20,8 @@
   "author": "Milan Hauth",
   "license": "MIT",
   "dependencies": {
-    "minimist": "^1.2.7"
+    "minimist": "^1.2.7",
+    "pify": "^6.1.0"
   },
   "devDependencies": {
     "@types/node": "^18.11.10"
