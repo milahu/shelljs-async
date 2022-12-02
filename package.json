@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "cd demo && npx vite",
+    "build": "cd demo && npx vite build && touch ../docs/.nojekyll",
     "pretty": "prettier --write src/**/*.js src/**/.*.js",
     "test": "bash test.sh"
   },
