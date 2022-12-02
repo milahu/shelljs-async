@@ -24516,7 +24516,10 @@ browserfs.exports.configure({
   // ... but we can promisify to async/await
   // @ts-ignore
   fs.promises = pify(fs);
-  await fs.promises.writeFile('/test.txt', 'Cool, I can do this in the browser!');
+  try {
+    await fs.promises.writeFile('/test.txt', 'Cool, I can do this in the browser!');
+  }
+  catch (err) { console.error(err); }
   var contents = await fs.promises.readFile('/test.txt');
   console.log(contents.toString());
 
