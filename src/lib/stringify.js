@@ -1,4 +1,4 @@
-/** @param {Generator<[number, string]>} it */
+/** @param {AsyncGenerator<[number, string]>} it */
 export async function stringify(it) {
   let buf = ""
   for await (const [stream, chunk] of it) {
