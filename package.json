@@ -25,6 +25,7 @@
   "devDependencies": {
     "@types/node": "^18.11.10",
     "browserfs": "^1.4.3",
-    "pify": "^6.1.0"
+    "pify": "^6.1.0",
+    "vite": "^3.2.4"
   }
 }
