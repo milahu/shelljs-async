@@ -1,5 +1,7 @@
 import * as BrowserFS from "browserfs"
 import pify from "pify"
+import * as shell from "../src/index.js"
+globalThis.sh = shell
 
 // set globalThis.require
 BrowserFS.install(globalThis);
@@ -10,7 +12,7 @@ BrowserFS.configure({
 }, async function(err) {
   if (err) { throw err; }
 
-  var fs = require('fs');
+  globalThis.fs = require('fs');
 
   // browserfs has only callback API
   fs.writeFile('/test.txt', 'Cool, I can do this in the browser!', function(err) {
