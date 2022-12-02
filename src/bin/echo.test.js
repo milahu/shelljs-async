@@ -1,4 +1,4 @@
-import "./.test.js"
+import "./.fs.js"
 import { echo } from "./.bin.js"
 //import { stringify } from "./.lib.js"
 ;(async function main() {

@@ -1,4 +1,4 @@
-import "./.test.js"
+import "./.fs.js"
 import { ls } from "./.bin.js"
 ;(async function main() {
   var it = ls(["."])()

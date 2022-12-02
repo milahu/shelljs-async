@@ -1,4 +1,4 @@
-import "./.test.js"
+import "./.fs.js"
 import { ls, grep } from "./.bin.js"
 import { pipe } from "./.lib.js"
 ;(async function main() {
