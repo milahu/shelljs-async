@@ -1,2 +1,2 @@
-export { ls } from "./commands/ls.js"
-export { grep } from "./commands/grep.js"
+export { ls } from "./ls.js"
+export { grep } from "./grep.js"
