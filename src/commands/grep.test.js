@@ -1,3 +1,5 @@
+import "./.test.js"
+
 import { ls, grep } from "../../src/index.js"
 
 (async function main() {
