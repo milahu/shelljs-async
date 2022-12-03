@@ -4,8 +4,13 @@ import pify from "pify"
 import * as bin from "../bin.js"
 import * as lib from "../lib.js"
 
-globalThis.bin = bin
-globalThis.lib = lib
+globalThis._bin = bin
+globalThis._lib = lib
+
+// put all binaries in global scope
+for (const name in bin) {
+  globalThis[name] = bin[name]
+}
 
 // set globalThis.require
 BrowserFS.install(globalThis);
@@ -37,7 +42,7 @@ BrowserFS.configure({
   var contents = await fs.promises.readFile('/test.txt');
   console.log(contents.toString());
 
-  console.log(`await lib.stringify(bin.ls(["."])())`)
-  console.log(await lib.stringify(bin.ls(["."])()))
+  console.log(`ls(".").debug()`)
+  console.log(ls(".").debug())
 
 });
