@@ -1,0 +1,3 @@
+[submodule "src/cmjs-shell"]
+	path = src/cmjs-shell
+	url = https://github.com/milahu/cmjs-shell
