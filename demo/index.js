@@ -21,6 +21,7 @@ BrowserFS.configure({
 }, async function(err) {
   if (err) { throw err; }
 
+  // needed for shelljs-async
   globalThis.fs = require('fs');
 
   // browserfs has only callback API
@@ -56,5 +57,8 @@ BrowserFS.configure({
 
   console.log(`await ls(".").pipe(grep).pipe(grep).stdout()`)
   console.log(await ls(".").pipe(grep).pipe(grep).stdout())
+
+  console.log(`await cat("test.txt").print()`)
+  console.log(await cat("test.txt").print())
 
 });
