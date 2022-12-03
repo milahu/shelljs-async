@@ -24124,6 +24124,119 @@ function pify(input, options) {
 	return proxy;
 }
 
+/**
+ * read one line
+ * @param {Generator<string>} stdin
+ * returns maximum one line per chunk,
+ * or less than one line, or nothing.
+ */
+async function readline(stdin) {
+  /** @type {string | undefined} */
+  let buf;
+  while (true) {
+    const chunk = stdin.next();
+    if (chunk.done || chunk.value == undefined) break
+    if (buf == undefined) buf = "";
+    buf += chunk.value;
+    //console.dir({chunk});
+    //throw new Error("todo")
+    if (chunk.value.endsWith("\n")) break
+  }
+  return buf
+}
+
+/**
+ * read lines
+ * @param {Generator<string>} stdin
+ * returns maximum one line per chunk,
+ * or less than one line, or nothing.
+ */
+async function* readlines(stdin) {
+  while (true) {
+    var line = await readline(stdin);
+    //console.dir({line});
+    //throw new Error("todo");
+    if (line == undefined) {
+      // end of input
+      return
+    }
+    yield line;
+  }
+}
+
+/**
+ * map stdout to stdin, print stderr
+ * @param {AsyncGenerator<[number, string]>} it
+ */
+async function* pipe(it) {
+  for await (const [stream, chunk] of it) {
+    if (stream == 1) {
+      yield [0, chunk];
+    } else if (stream == 2) {
+      console.error(chunk.trim());
+    }
+  }
+}
+
+/** @param {AsyncGenerator<[number, string]>} it */
+async function stringify(it) {
+  let buf = "";
+  for await (const [stream, chunk] of it) {
+    // only stdout
+    if (stream == 1) {
+      buf += chunk;
+    }
+  }
+  return buf
+}
+
+/**
+ * print stdout, stderr, code of iterator
+ * @param {AsyncGenerator<[number, string]>} it
+ */
+async function debug(it) {
+  let result = await it.next();
+  while (result.done == false) {
+    const [stream, chunk] = result.value;
+    console.log(`stream ${stream}: chunk: ` + JSON.stringify(chunk));
+    result = await it.next();
+  }
+  const code = result.value;
+  console.log(`code ${code}`);
+}
+
+/** @typedef {import("../bin/.types.js").Bin} Bin */
+
+/**
+ * add methods to a BinResult
+ * @param {_BinResult} fn
+ * @return {BinResult}
+ */
+function makeBin(fn) {
+//   * @param {(args: string[], options: Object) => AsyncGeneratorFunction} reader 
+
+  // FIXME type cast with jsdoc types
+  /** @type {BinResult} */
+  const _fn = fn;
+
+  _fn.pipe = (reader, args = [], options = {}) => {
+    options.stdin = pipe(_fn());
+    return reader(args, options)
+  };
+
+  return _fn
+}
+
+/** @typedef {import("../bin/.types.js").BinChainer} BinChainer */
+
+/**
+ * call binary
+ * @type {BinChainer}
+ */
+function call(bin, args = [], options = {}) {
+  return bin(args, options)
+}
+
 var minimist = function (args, opts) {
     if (!opts) opts = {};
     
@@ -24380,35 +24493,50 @@ import fs from "fs"
 globalThis.fs = fs
 */
 
+/** @typedef {import("./.types.js").Bin} Bin */
+
+/**
+* list files
+* @type {Bin}
+*/
 function ls(args = [], options = {}) {
   const arg = minimist(args);
   const files = arg._;
   if (files.length == 0) files.push(".");
   //console.dir({arg, files})
 
-  /** @return {AsyncGenerator<[number, string]>} */
-  return async function* ls_() {
+  return makeBin(async function* ls_() {
     for (const file of files) {
       const stats = await fs.promises.stat(file);
       if (stats.isDirectory()) {
         for (const file2 of await fs.promises.readdir(file)) {
-          yield [1, file2 + "\n"];
+          /** @type {[number, string]} */
+          const value = [1, (file2 + "\n")];
+          yield value;
         }
       } else if (stats.isFile()) {
-        yield [1, file + "\n"];
+        /** @type {[number, string]} */
+        const value = [1, (file + "\n")];
+        yield value;
       }
     }
     return 0
-  }
+  })
 }
 
+/** @typedef {import("./.types.js").Bin} Bin */
+
+/**
+* gnu regular expressions
+* @type {Bin}
+*/
 function grep(args = [], options = {}) {
-  /** @return {AsyncGenerator<[number, string]>} */
-  return async function* grep_() {
+  return makeBin(async function* grep_() {
     for await (const [_stream, chunk] of options.stdin) {
       yield [1, `grep: ${chunk}`];
     }
-  }
+    return 0
+  })
 }
 
 function echo(args = [], options = {}) {
@@ -24426,94 +24554,15 @@ const bin = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
     echo
 }, Symbol.toStringTag, { value: 'Module' }));
 
-/**
- * read one line
- * @param {Generator<string>} stdin
- * returns maximum one line per chunk,
- * or less than one line, or nothing.
- */
-async function readline(stdin) {
-  /** @type {string | undefined} */
-  let buf;
-  while (true) {
-    const chunk = stdin.next();
-    if (chunk.done || chunk.value == undefined) break
-    if (buf == undefined) buf = "";
-    buf += chunk.value;
-    //console.dir({chunk});
-    //throw new Error("todo")
-    if (chunk.value.endsWith("\n")) break
-  }
-  return buf
-}
-
-/**
- * read lines
- * @param {Generator<string>} stdin
- * returns maximum one line per chunk,
- * or less than one line, or nothing.
- */
-async function* readlines(stdin) {
-  while (true) {
-    var line = await readline(stdin);
-    //console.dir({line});
-    //throw new Error("todo");
-    if (line == undefined) {
-      // end of input
-      return
-    }
-    yield line;
-  }
-}
-
-/**
- * map stdout to stdin, print stderr
- * @param {AsyncGenerator<[number, string]>} it
- */
-async function* pipe(it) {
-  for await (const [stream, chunk] of it) {
-    if (stream == 1) {
-      yield [0, chunk];
-    } else if (stream == 2) {
-      console.error(chunk.trim());
-    }
-  }
-}
-
-/** @param {AsyncGenerator<[number, string]>} it */
-async function stringify(it) {
-  let buf = "";
-  for await (const [stream, chunk] of it) {
-    // only stdout
-    if (stream == 1) {
-      buf += chunk;
-    }
-  }
-  return buf
-}
-
-/**
- * print stdout, stderr, code of iterator
- * @param {AsyncGenerator<[number, string]>} it
- */
-async function debug(it) {
-  let result = await it.next();
-  while (result.done == false) {
-    const [stream, chunk] = result.value;
-    console.log(`stream ${stream}: chunk: ` + JSON.stringify(chunk));
-    result = await it.next();
-  }
-  const code = result.value;
-  console.log(`code ${code}`);
-}
-
 const lib = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
     __proto__: null,
     readline,
     readlines,
     pipe,
     stringify,
-    debug
+    debug,
+    makeBin,
+    call
 }, Symbol.toStringTag, { value: 'Module' }));
 
 globalThis.bin = bin;
