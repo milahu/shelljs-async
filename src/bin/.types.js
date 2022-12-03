@@ -7,6 +7,8 @@
 *
 * @typedef {Object} BinChainers
 * @property {BinChainer} pipe pipe stdout to stdin
+* @property {() => BinResultResult} iter get the chunk iterator
+* @property {() => Promise<void>} debug debug the chunk iterator
 *
 * @typedef {_BinResult & BinChainers} BinResult
 *
