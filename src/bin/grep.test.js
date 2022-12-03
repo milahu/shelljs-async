@@ -37,4 +37,19 @@ import { pipe, call } from "./.lib.js"
     debug()
   )
 
+  console.log("ls test 6: call + pipe chainer + print")
+  await (
+    call(ls).
+    pipe(grep).
+    print()
+  )
+
+  console.log("ls test 7: call + pipe chainer + stdout")
+  var stdout = await (
+    call(ls).
+    pipe(grep).
+    stdout()
+  )
+  console.log(stdout)
+
 })()

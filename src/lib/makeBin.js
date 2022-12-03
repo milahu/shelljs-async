@@ -3,7 +3,7 @@
 /** @typedef {import("../bin/.types.js").BinResult} BinResult */
 /** @typedef {import("../bin/.types.js").BinChainer} BinChainer */
 
-import { pipe, debug } from "./.lib.js"
+import { pipe, debug, print, stdout } from "./.lib.js"
 
 /**
  * add methods to a BinResult
@@ -23,8 +23,9 @@ export function makeBin(fn) {
   }
 
   _fn.iter = () => _fn()
-
   _fn.debug = () => debug(_fn())
+  _fn.print = () => print(_fn())
+  _fn.stdout = () => stdout(_fn())
 
   return _fn
 }
