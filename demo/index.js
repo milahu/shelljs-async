@@ -42,7 +42,19 @@ BrowserFS.configure({
   var contents = await fs.promises.readFile('/test.txt');
   console.log(contents.toString());
 
-  console.log(`ls(".").debug()`)
-  console.log(ls(".").debug())
+  console.log(`await ls(".").debug()`)
+  console.log(await ls(".").debug())
+
+  console.log(`await ls(".").print()`)
+  console.log(await ls(".").print())
+
+  console.log(`await ls(".").stdout()`)
+  console.log(await ls(".").stdout())
+
+  console.log(`await ls(".").pipe(grep).stdout()`)
+  console.log(await ls(".").pipe(grep).stdout())
+
+  console.log(`await ls(".").pipe(grep).pipe(grep).stdout()`)
+  console.log(await ls(".").pipe(grep).pipe(grep).stdout())
 
 });
