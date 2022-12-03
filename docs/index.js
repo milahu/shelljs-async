@@ -24613,11 +24613,40 @@ function echo(...argsOpts) {
   })
 }
 
+/*
+// imported by caller
+import fs from "fs"
+globalThis.fs = fs
+*/
+
+/** @typedef {import("./.types.js").Bin} Bin */
+
+/**
+* concat files to standard output
+* @type {Bin}
+*/
+function cat$1(...argsOpts) {
+  // @ts-ignore
+  const [args, options] = splitArgs(argsOpts);
+  const arg = minimist(args);
+  const files = arg._;
+
+  return makeBin(async function* cat_() {
+    // TODO also read stdin
+    for (const file of files) {
+      var contents = await (await fs.promises.readFile(file)).toString();
+      yield [1, contents];
+    }
+    return 0
+  })
+}
+
 const bin = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
     __proto__: null,
     ls: ls$1,
     grep: grep$1,
-    echo
+    echo,
+    cat: cat$1
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const lib = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
@@ -24651,6 +24680,7 @@ browserfs.exports.configure({
 }, async function(err) {
   if (err) { throw err; }
 
+  // needed for shelljs-async
   globalThis.fs = require('fs');
 
   // browserfs has only callback API
@@ -24686,5 +24716,8 @@ browserfs.exports.configure({
 
   console.log(`await ls(".").pipe(grep).pipe(grep).stdout()`);
   console.log(await ls(".").pipe(grep).pipe(grep).stdout());
+
+  console.log(`await cat("test.txt").print()`);
+  console.log(await cat("test.txt").print());
 
 });
