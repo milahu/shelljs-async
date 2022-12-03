@@ -24586,7 +24586,7 @@ function ls$1(...argsOpts) {
 * gnu regular expressions
 * @type {Bin}
 */
-function grep(...argsOpts) {
+function grep$1(...argsOpts) {
   // @ts-ignore
   const [args, options] = splitArgs(argsOpts);
   return makeBin(async function* grep_() {
@@ -24616,7 +24616,7 @@ function echo(...argsOpts) {
 const bin = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
     __proto__: null,
     ls: ls$1,
-    grep,
+    grep: grep$1,
     echo
 }, Symbol.toStringTag, { value: 'Module' }));
 
@@ -24672,7 +24672,19 @@ browserfs.exports.configure({
   var contents = await fs.promises.readFile('/test.txt');
   console.log(contents.toString());
 
-  console.log(`ls(".").debug()`);
-  console.log(ls(".").debug());
+  console.log(`await ls(".").debug()`);
+  console.log(await ls(".").debug());
+
+  console.log(`await ls(".").print()`);
+  console.log(await ls(".").print());
+
+  console.log(`await ls(".").stdout()`);
+  console.log(await ls(".").stdout());
+
+  console.log(`await ls(".").pipe(grep).stdout()`);
+  console.log(await ls(".").pipe(grep).stdout());
+
+  console.log(`await ls(".").pipe(grep).pipe(grep).stdout()`);
+  console.log(await ls(".").pipe(grep).pipe(grep).stdout());
 
 });
