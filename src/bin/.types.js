@@ -3,7 +3,7 @@
 *
 * @typedef {() => BinResultResult} _BinResult
 *
-* @typedef {(bin: Bin, args: BinArgs, options: BinOptions) => BinResult} BinChainer
+* @typedef {(bin: Bin, args?: BinArgs, options?: BinOptions) => BinResult} BinChainer
 *
 * @typedef {_BinResult & { pipe: BinChainer; }} BinResult
 *
