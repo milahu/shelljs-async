@@ -1,4 +1,4 @@
-import { makeBin } from "./.lib.js"
+import { makeBin, splitArgs } from "./.lib.js"
 import minimist from "minimist"
 /*
 // imported by caller
@@ -12,7 +12,9 @@ globalThis.fs = fs
 * list files
 * @type {Bin}
 */
-export function ls(args = [], options = {}) {
+export function ls(...argsOpts) {
+  // @ts-ignore
+  const [args, options] = splitArgs(argsOpts)
   const arg = minimist(args)
   const files = arg._
   if (files.length == 0) files.push(".")

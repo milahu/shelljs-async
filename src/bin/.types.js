@@ -1,22 +1,23 @@
 /**
-* @typedef {AsyncGenerator<[number, string]>} BinResultResult
+* @typedef {AsyncGenerator<[number, string]>} ChunkGenerator
 *
-* @typedef {() => BinResultResult} _BinResult
+* @typedef {() => ChunkGenerator} _BinResult
 *
-* @typedef {(bin: Bin, args?: BinArgs, options?: BinOptions) => BinResult} BinChainer
+* @typedef {(bin: Bin, args?: BinArgs) => BinResult} BinChainer
 *
 * @typedef {Object} BinChainers
 * @property {BinChainer} pipe pipe stdout to stdin
-* @property {() => BinResultResult} iter get the chunk iterator
+* @property {() => ChunkGenerator} iter get the chunk iterator
 * @property {() => Promise<void>} debug debug the chunk iterator
 *
 * @typedef {_BinResult & BinChainers} BinResult
 *
-* @typedef {string[]} BinArgs
+* @typedef {string[] | [...string[], BinOptions]} BinArgs
 *
 * @typedef {Object} BinOptions
+* @property {ChunkGenerator} [stdin] input chunks
 *
-* @typedef {(args: BinArgs, options: BinOptions) => BinResult} Bin
+* @typedef {(...args: BinArgs) => BinResult} Bin
 */
 
 // fix: file is not a module
