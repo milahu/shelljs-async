@@ -5,7 +5,10 @@
 *
 * @typedef {(bin: Bin, args?: BinArgs, options?: BinOptions) => BinResult} BinChainer
 *
-* @typedef {_BinResult & { pipe: BinChainer; }} BinResult
+* @typedef {Object} BinChainers
+* @property {BinChainer} pipe pipe stdout to stdin
+*
+* @typedef {_BinResult & BinChainers} BinResult
 *
 * @typedef {string[]} BinArgs
 *

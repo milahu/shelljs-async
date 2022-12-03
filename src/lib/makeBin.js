@@ -17,10 +17,6 @@ export function makeBin(fn) {
   /** @type {BinResult} */
   const _fn = fn
 
-  /**
-   * pipe stdout to stdin
-   * @type {BinChainer}
-   */
   _fn.pipe = (reader, args = [], options = {}) => {
     options.stdin = pipe(_fn())
     return reader(args, options)
