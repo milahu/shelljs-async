@@ -1,3 +1,4 @@
+import { makeBin } from "./.lib.js"
 import minimist from "minimist"
 /*
 // imported by caller
@@ -5,24 +6,33 @@ import fs from "fs"
 globalThis.fs = fs
 */
 
+/** @typedef {import("./.types.js").Bin} Bin */
+
+/**
+* list files
+* @type {Bin}
+*/
 export function ls(args = [], options = {}) {
   const arg = minimist(args)
   const files = arg._
   if (files.length == 0) files.push(".")
   //console.dir({arg, files})
 
-  /** @return {AsyncGenerator<[number, string]>} */
-  return async function* ls_() {
+  return makeBin(async function* ls_() {
     for (const file of files) {
       const stats = await fs.promises.stat(file)
       if (stats.isDirectory()) {
         for (const file2 of await fs.promises.readdir(file)) {
-          yield [1, file2 + "\n"]
+          /** @type {[number, string]} */
+          const value = [1, (file2 + "\n")]
+          yield value
         }
       } else if (stats.isFile()) {
-        yield [1, file + "\n"]
+        /** @type {[number, string]} */
+        const value = [1, (file + "\n")]
+        yield value
       }
     }
     return 0
-  }
+  })
 }
