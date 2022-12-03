@@ -18,4 +18,9 @@ import { pipe, call } from "./.lib.js"
   var it = call(ls).pipe(grep)()
   //console.dir({it})
   await debug(it)
+
+  console.log("ls test 4: call + pipe chainer + pipe chainer")
+  var it = call(ls).pipe(grep).pipe(grep)()
+  //console.dir({it})
+  await debug(it)
 })()
