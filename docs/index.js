@@ -24224,6 +24224,11 @@ function makeBin(fn) {
     return reader(args, options)
   };
 
+  _fn.iter = () => _fn();
+  _fn.debug = () => debug(_fn());
+  _fn.print = () => print(_fn());
+  _fn.stdout = () => stdout(_fn());
+
   return _fn
 }
 
@@ -24233,8 +24238,57 @@ function makeBin(fn) {
  * call binary
  * @type {BinChainer}
  */
-function call(bin, args = [], options = {}) {
-  return bin(args, options)
+function call(bin, ...argsOpts) {
+  // @ts-ignore
+  return bin(...argsOpts)
+}
+
+/** @typedef {import("../bin/.types.js").BinArgs} BinArgs */
+/** @typedef {import("../bin/.types.js").BinOptions} BinOptions */
+
+/**
+* @param {BinArgs} argsOpts
+* @return {[string[], BinOptions]}
+*/
+function splitArgs(argsOpts) {
+  const lastArg = argsOpts[argsOpts.length - 1];
+  /** @type {BinOptions} */
+  let options = {};
+  if (typeof lastArg == "object") {
+    // @ts-ignore
+    options = argsOpts.pop();
+  }
+  return [
+    // @ts-ignore
+    argsOpts,
+    options
+  ]
+}
+
+/**
+ * get stdout of iterator
+ * @param {AsyncGenerator<[number, string]>} it
+ * @return {Promise<string>}
+ */
+async function stdout(it) {
+  let buf = "";
+  let result = await it.next();
+  while (result.done == false) {
+    const [stream, chunk] = result.value;
+    if (stream == 1) {
+      buf += chunk;
+    }
+    result = await it.next();
+  }
+  return buf
+}
+
+/**
+ * print stdout of iterator
+ * @param {AsyncGenerator<[number, string]>} it
+ */
+async function print(it) {
+  console.log(await stdout(it));
 }
 
 var minimist = function (args, opts) {
@@ -24499,7 +24553,9 @@ globalThis.fs = fs
 * list files
 * @type {Bin}
 */
-function ls(args = [], options = {}) {
+function ls$1(...argsOpts) {
+  // @ts-ignore
+  const [args, options] = splitArgs(argsOpts);
   const arg = minimist(args);
   const files = arg._;
   if (files.length == 0) files.push(".");
@@ -24530,7 +24586,9 @@ function ls(args = [], options = {}) {
 * gnu regular expressions
 * @type {Bin}
 */
-function grep(args = [], options = {}) {
+function grep(...argsOpts) {
+  // @ts-ignore
+  const [args, options] = splitArgs(argsOpts);
   return makeBin(async function* grep_() {
     for await (const [_stream, chunk] of options.stdin) {
       yield [1, `grep: ${chunk}`];
@@ -24539,17 +24597,25 @@ function grep(args = [], options = {}) {
   })
 }
 
-function echo(args = [], options = {}) {
+/** @typedef {import("./.types.js").Bin} Bin */
+
+/**
+* gnu regular expressions
+* @type {Bin}
+*/
+function echo(...argsOpts) {
+  // @ts-ignore
+  const [args, options] = splitArgs(argsOpts);
   /** @return {AsyncGenerator<[number, string]>} */
-  return async function* echo_() {
+  return makeBin(async function* echo_() {
     yield [1, args.join(" ") + "\n"];
     return 0
-  }
+  })
 }
 
 const bin = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
     __proto__: null,
-    ls,
+    ls: ls$1,
     grep,
     echo
 }, Symbol.toStringTag, { value: 'Module' }));
@@ -24562,11 +24628,19 @@ const lib = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
     stringify,
     debug,
     makeBin,
-    call
+    call,
+    splitArgs,
+    print,
+    stdout
 }, Symbol.toStringTag, { value: 'Module' }));
 
-globalThis.bin = bin;
-globalThis.lib = lib;
+globalThis._bin = bin;
+globalThis._lib = lib;
+
+// put all binaries in global scope
+for (const name in bin) {
+  globalThis[name] = bin[name];
+}
 
 // set globalThis.require
 browserfs.exports.install(globalThis);
@@ -24598,7 +24672,7 @@ browserfs.exports.configure({
   var contents = await fs.promises.readFile('/test.txt');
   console.log(contents.toString());
 
-  console.log(`await lib.stringify(bin.ls(["."])())`);
-  console.log(await stringify(ls(["."])()));
+  console.log(`ls(".").debug()`);
+  console.log(ls(".").debug());
 
 });
