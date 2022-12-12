@@ -58,6 +58,7 @@ Cool, I can do this in the browser!
 - https://github.com/shelljs/shelljs - 14K stars
   - https://github.com/nfischer/shelljs-transpiler - transpile Bash to ShellJS
 - https://github.com/yankeeinlondon/async-shelljs - adds an async implementation of "exec"
+- https://github.com/miketalbot/js-coroutines - async generators: JSON.parse, JSON.stringify, compress, decompress
 - https://github.com/bashojs/basho - 120 stars - Lazy shell pipelines in plain JavaScript
 - https://github.com/plasma-umass/browsix - https://browsix.org/ - 3K stars - Browsix is a Unix-like operating system for the browser.
 - https://github.com/UltiRequiem/coreutils - 30 stars - deno - Cross-platform Deno rewrite of the GNU Coreutils
@@ -70,5 +71,4 @@ Cool, I can do this in the browser!
 - https://github.com/stencila/basha - Bash interpreter for executable documents. deprecated for https://github.com/takluyver/bash_kernel in python and https://github.com/stencila/stencila
 - https://github.com/krithravi/bash-prompt-interpreter - Interprets the values of Bash prompts. Submitted to Sunhacks 2020!
 - https://github.com/codemirror/legacy-modes/blob/main/mode/shell.js
-- https://github.com/miketalbot/js-coroutines - async generators: JSON.parse, JSON.stringify, compress, decompress
 - https://github.com/milahu/nix-eval-js - nix interpreter in javascript, based on lezer-parser
