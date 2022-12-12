@@ -26,10 +26,23 @@
     "minimist": "^1.2.7"
   },
   "devDependencies": {
+    "@codemirror/commands": "^6.1.2",
+    "@codemirror/lang-javascript": "^6.1.1",
+    "@codemirror/language": "^6.3.1",
+    "@codemirror/legacy-modes": "^6.3.1",
+    "@codemirror/state": "^6.1.4",
+    "@codemirror/view": "^6.6.0",
+    "@lezer/common": "^1.0.2",
     "@types/node": "^18.11.10",
     "browserfs": "^1.4.3",
+    "codemirror": "^6.0.1",
+    "codemirror-readonly-ranges": "0.1.0-alpha.1",
+    "esprima": "^4.0.1",
     "pify": "^6.1.0",
     "prettier": "^2.8.0",
+    "queue-microtask": "^1.2.3",
+    "range-analyzer": "0.1.1-alpha.2",
+    "tslib": "^2.4.1",
     "vite": "^3.2.4"
   }
 }
