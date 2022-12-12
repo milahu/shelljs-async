@@ -71,3 +71,4 @@ Cool, I can do this in the browser!
 - https://github.com/krithravi/bash-prompt-interpreter - Interprets the values of Bash prompts. Submitted to Sunhacks 2020!
 - https://github.com/codemirror/legacy-modes/blob/main/mode/shell.js
 - https://github.com/miketalbot/js-coroutines - async generators: JSON.parse, JSON.stringify, compress, decompress
+- https://github.com/milahu/nix-eval-js - nix interpreter in javascript, based on lezer-parser
