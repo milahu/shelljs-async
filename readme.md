@@ -30,3 +30,4 @@ async version of [shelljs](https://github.com/shelljs/shelljs)
 - https://github.com/stencila/basha - Bash interpreter for executable documents. deprecated for https://github.com/takluyver/bash_kernel in python and https://github.com/stencila/stencila
 - https://github.com/krithravi/bash-prompt-interpreter - Interprets the values of Bash prompts. Submitted to Sunhacks 2020!
 - https://github.com/codemirror/legacy-modes/blob/main/mode/shell.js
+- https://github.com/miketalbot/js-coroutines - async generators: JSON.parse, JSON.stringify, compress, decompress
