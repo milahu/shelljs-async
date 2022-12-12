@@ -11,6 +11,46 @@ async version of [shelljs](https://github.com/shelljs/shelljs)
 - emulate an interactive shell
   - parse input strings from a bash prompt
 
+## status
+
+proof of concept
+
+## examples
+
+```js
+await ls(".").print()
+/*
+test.txt
+hello.txt
+readme.md
+src
+demo
+*/
+
+await ls(".").debug()
+/*
+stream 1: chunk: "test.txt\n"
+stream 1: chunk: "hello.txt\n"
+stream 1: chunk: "readme.md\n"
+stream 1: chunk: "src\n"
+stream 1: chunk: "demo\n"
+*/
+
+await ls(".").pipe(grep).stdout()
+/*
+grep: test.txt
+grep: hello.txt
+grep: readme.md
+grep: src
+grep: demo
+*/
+
+await cat("test.txt").print()
+/*
+Cool, I can do this in the browser!
+*/
+```
+
 ## similar projects
 
 - https://github.com/shelljs/shelljs - 14K stars
