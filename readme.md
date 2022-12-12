@@ -53,13 +53,13 @@ Cool, I can do this in the browser!
 
 ## similar projects
 
+- https://github.com/dthree/cash - 8K stars - Cross-platform Linux commands in ES6. only for node.js
+  - https://news.ycombinator.com/item?id=11334597
 - https://github.com/shelljs/shelljs - 14K stars
   - https://github.com/nfischer/shelljs-transpiler - transpile Bash to ShellJS
 - https://github.com/yankeeinlondon/async-shelljs - adds an async implementation of "exec"
 - https://github.com/bashojs/basho - 120 stars - Lazy shell pipelines in plain JavaScript
 - https://github.com/plasma-umass/browsix - https://browsix.org/ - 3K stars - Browsix is a Unix-like operating system for the browser.
-- https://github.com/dthree/cash - 8K stars - Cross-platform Linux commands in ES6. only for node.js
-  - https://news.ycombinator.com/item?id=11334597
 - https://github.com/UltiRequiem/coreutils - 30 stars - deno - Cross-platform Deno rewrite of the GNU Coreutils
 - https://github.com/rethab/deno-bash - A silly little bash interpreter written in TypeScript for Deno.
 - https://github.com/taokann/WeBash
