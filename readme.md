@@ -8,6 +8,7 @@ async version of [shelljs](https://github.com/shelljs/shelljs)
   - browserfs
   - xterm.js
 - async by default
+  - https://github.com/shelljs/shelljs/issues/2
 - emulate an interactive shell
   - parse input strings from a bash prompt
 
