@@ -4,6 +4,8 @@ bash syntax and gnu coreutils in javascript
 
 async version of [shelljs](https://github.com/shelljs/shelljs)
 
+web version of [cash](https://github.com/dthree/cash)
+
 - works in a web browser
   - browserfs
   - xterm.js
@@ -52,12 +54,27 @@ Cool, I can do this in the browser!
 */
 ```
 
+## challenges
+
+### signals
+
+every consumer process can send signals to the producer process
+
+## reading
+
+### generators
+
+- https://maetl.net/notes/experiments/lazy-pipelines-js-generators
+- https://javascript.plainenglish.io/javascript-lazy-evaluation-generators-examples-included-f9eaa517f969
+
 ## similar projects
 
 - https://github.com/dthree/cash - 8K stars - Cross-platform Linux commands in ES6. only for node.js
   - https://news.ycombinator.com/item?id=11334597
 - https://github.com/shelljs/shelljs - 14K stars
   - https://github.com/nfischer/shelljs-transpiler - transpile Bash to ShellJS
+- https://www.npmjs.com/package/posix-browser - concept: posix system calls in the browser
+  - part of https://github.com/sagemathinc/cowasm
 - https://github.com/yankeeinlondon/async-shelljs - adds an async implementation of "exec"
 - https://github.com/miketalbot/js-coroutines - async generators: JSON.parse, JSON.stringify, compress, decompress
 - https://github.com/bashojs/basho - 120 stars - Lazy shell pipelines in plain JavaScript
