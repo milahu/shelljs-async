@@ -1,5 +1,6 @@
 /**
  * redirect stdout to stdin, print stderr
+ * called from makeBin
  * @param {AsyncGenerator<[number, string]>} it
  */
 export async function* pipe(it) {
