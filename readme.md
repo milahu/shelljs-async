@@ -52,6 +52,15 @@ await cat("test.txt").print()
 /*
 Cool, I can do this in the browser!
 */
+
+await seq(20).pipe(head, "-n", "5").print()
+/*
+1
+2
+3
+4
+5
+*/
 ```
 
 ## challenges
