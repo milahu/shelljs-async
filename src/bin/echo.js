@@ -2,7 +2,7 @@
 import { makeBin, splitArgs } from "./.lib.js"
 
 /**
-* gnu regular expressions
+* print arguments
 * @type {Bin}
 */
 export function echo(...argsOpts) {
