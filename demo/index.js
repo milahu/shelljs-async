@@ -167,4 +167,7 @@ BrowserFS.configure({
   console.log(`await cat("test.txt").print()`)
   console.log(await cat("test.txt").print())
 
+  console.log(`await seq(20).pipe(head, "-n", "5").print()`)
+  console.log(await seq(20).pipe(head, "-n", "5").print())
+
 });
