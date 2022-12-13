@@ -1,5 +1,5 @@
 /**
- * map stdout to stdin, print stderr
+ * redirect stdout to stdin, print stderr
  * @param {AsyncGenerator<[number, string]>} it
  */
 export async function* pipe(it) {
