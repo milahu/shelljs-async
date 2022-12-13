@@ -2,6 +2,7 @@
   "name": "shelljs-web",
   "version": "0.0.1",
   "description": "shelljs in web browser",
+  "homepage": "https://github.com/milahu/shelljs-async",
   "main": "src/index.js",
   "type": "module",
   "scripts": {
