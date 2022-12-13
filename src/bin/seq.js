@@ -9,7 +9,7 @@ globalThis.fs = fs
 /** @typedef {import("./.types.js").Bin} Bin */
 
 /**
-* list files
+* print a sequence of numbers
 * @type {Bin}
 */
 export function seq(...argsOpts) {
