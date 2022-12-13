@@ -3,7 +3,7 @@
 /** @typedef {import("../bin/.types.js").BinResult} BinResult */
 /** @typedef {import("../bin/.types.js").BinChainer} BinChainer */
 
-import { pipe, debug, print, stdout } from "./.lib.js"
+import { pipe, debug, print, stdout, splitArgs } from "./.lib.js"
 
 /**
  * add methods to a BinResult
@@ -17,9 +17,13 @@ export function makeBin(fn) {
   /** @type {BinResult} */
   const _fn = fn
 
-  _fn.pipe = (reader, args = [], options = {}) => {
+  _fn.pipe = (reader, ...argsOpts) => {
+    const [args, options] = splitArgs(argsOpts)
+    if (options.stdin) {
+      throw new Error("options.stdin must be empty in pipe")
+    }
     options.stdin = pipe(_fn())
-    return reader(args, options)
+    return reader(...args, options)
   }
 
   _fn.iter = () => _fn()
